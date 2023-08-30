@@ -1,4 +1,4 @@
-#ifndef QSLIM_H
+﻿#ifndef QSLIM_H
 #define QSLIM_H
 #include <stdlib.h>
 #include <stdio.h>
@@ -385,14 +385,14 @@ inline real unitize(Vec4& v)
 	return l;
 }
 template<class T>
-class array {
+class TArray {
 protected:
 	T *data;
 	int len;
 public:
-	array() { data=NULL; len=0; }
-	array(int l) { init(l); }
-	~array() { free(); }
+	TArray() { data=NULL; len=0; }
+	TArray(int l) { init(l); }
+	~TArray() { free(); }
 	inline void init(int l);
 	inline void free();
 	inline void resize(int l);
@@ -406,13 +406,13 @@ public:
 	inline int maxLength() const { return len; }
 };
 template<class T>
-inline void array<T>::init(int l)
+inline void TArray<T>::init(int l)
 {
 	data = new T[l];
 	len = l;
 }
 template<class T>
-inline void array<T>::free()
+inline void TArray<T>::free()
 {
 	if( data )
 	{
@@ -421,17 +421,17 @@ inline void array<T>::free()
 	}
 }
 template<class T>
-inline T& array<T>::ref(int i)
+inline T& TArray<T>::ref(int i)
 {
 	return data[i];
 }
 template<class T>
-inline const T& array<T>::ref(int i) const
+inline const T& TArray<T>::ref(int i) const
 {
 	return data[i];
 }
 template<class T>
-inline void array<T>::resize(int l)
+inline void TArray<T>::resize(int l)
 {
 	T *old = data;
 	data = new T[l];
@@ -462,10 +462,10 @@ class Plane
 public:
 	Plane() : n(0,0,1) { d=0; } // -- this will define the XY plane
 	Plane(const Vec3& p, const Vec3& q, const Vec3& r) { calcFrom(p,q,r); }
-	Plane(const array<Vec3>& verts) { calcFrom(verts); }
+	Plane(const TArray<Vec3>& verts) { calcFrom(verts); }
 	Plane(const Plane& p) { n=p.n; d=p.d; }
 	void calcFrom(const Vec3& p, const Vec3& q, const Vec3& r);
-	void calcFrom(const array<Vec3>&);
+	void calcFrom(const TArray<Vec3>&);
 	bool isValid() const { return n[X]!=0.0 || n[Y]!=0.0 || n[Z]!= 0.0; }
 	void markInvalid() { n[X] = n[Y] = n[Z] = 0.0; }
 	real distTo(const Vec3& p) const { return n*p + d; }
@@ -511,13 +511,13 @@ extern  real triangleCompactness(const Vec3& v1, const Vec3& v2, const Vec3& v3)
 extern real __gfx_hoppe_dist(const Face3& f, const Vec3& v);
 #define DOTP(a, b) (a[0] * b[0] + a[1] * b[1] + a[2] * b[2])
 template<class T>
-class buffer : public array<T> {
+class buffer : public TArray<T> {
 protected:
 	int fill;
 public:
 	buffer() { init(8); }
 	buffer(int l) { init(l); }
-	inline void init(int l) { array<T>::init(l); fill=0; }
+	inline void init(int l) { TArray<T>::init(l); fill=0; }
 	inline int add(const T& t);
 	inline void reset();
 	inline int find(const T&);
@@ -602,7 +602,7 @@ public:
 	heap_node(Heapable *t, float i=0.0) { obj=t; import=i; }
 	heap_node(const heap_node& h) { import=h.import; obj=h.obj; }
 };
-class Heap : public array<heap_node> {
+class Heap : public TArray<heap_node> {
 	int size;
 	void swap(int i, int j);
 	int parent(int i) { return (i-1)/2; }
@@ -612,7 +612,7 @@ class Heap : public array<heap_node> {
 	void downheap(int i);
 public:
 	Heap() { size=0; }
-	Heap(int s) : array<heap_node>(s) { size=0; }
+	Heap(int s) : TArray<heap_node>(s) { size=0; }
 	void insert(Heapable *, float);
 	void update(Heapable *, float);
 	heap_node *extract();

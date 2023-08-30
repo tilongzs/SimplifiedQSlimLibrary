@@ -1,4 +1,4 @@
-#include "Mesh.h"
+﻿#include "Mesh.h"
 #include "QSlim.h"
 
 static void qslim_init()
@@ -101,7 +101,7 @@ static void ReplaceM(Mesh& m)
 int main()
 {
 	Mesh m;
-	PlyManager::ReadFile(m,"D:\\VTKproj\\sample.ply");
+	PlyManager::ReadFile(m,"D:\\SoftwareDev\\SimplifiedQSlimLibrary\\plane.ply");
 	InitM0(m);
 	qslim_init();
 	face_target = 2*m.Faces.size()/3;
@@ -117,7 +117,7 @@ int main()
 	pair_selection_tolerance = 0.0;
 	qslim_run();
 	ReplaceM(m);
-	PlyManager::Output(m,"D:\\VTKproj\\sample_deci.ply");
+	PlyManager::Output(m, "D:\\SoftwareDev\\SimplifiedQSlimLibrary\\plane_deci.ply");
 
 	return 0;
 }

@@ -1,4 +1,4 @@
-#include "QSlim.h"
+﻿#include "QSlim.h"
 
 Vec3 randomPoint(const Vec3& v1, const Vec3& v2)
 {
@@ -496,7 +496,7 @@ void Plane::calcFrom(const Vec3& p1, const Vec3& p2, const Vec3& p3)
 
 	d = -n*p1;
 }
-void Plane::calcFrom(const array<Vec3>& verts)
+void Plane::calcFrom(const TArray<Vec3>& verts)
 {
 	n[X] = n[Y] = n[Z] = 0.0;
 
@@ -1146,7 +1146,7 @@ public:
 };
 int will_draw_pairs = 0;
 static Heap *heap;
-static array<vert_info> vinfo;
+static TArray<vert_info> vinfo;
 static real proximity_limit;
 static inline vert_info& vertex_info(Vertex *v)
 {
